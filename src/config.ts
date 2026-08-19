@@ -23,7 +23,7 @@ export const config = {
   countdownTarget: "2026-08-30T20:30:00",
 
   inviteLine:
-    "Together with our families, we joyfully invite you to share in the celebration of our wedding",
+    "We\u2019ve spent years being each other\u2019s favorite person. Now it\u2019s time to celebrate the beginning of forever, and we\u2019d be so happy to share this moment with you.",
 
   venue: {
     name: "Sea Mariage Wedding Hall",
