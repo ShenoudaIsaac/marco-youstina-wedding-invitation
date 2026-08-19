@@ -31,6 +31,16 @@ export default function Gallery() {
     return () => window.clearInterval(id);
   }, [index]);
 
+  // If a photo failed once (flaky mobile network), quietly retry it in the
+  // background whenever its slide comes around again; the placeholder stays
+  // up until the real image actually loads.
+  useEffect(() => {
+    if (!failed[index]) return;
+    const probe = new Image();
+    probe.onload = () => setFailed((f) => ({ ...f, [index]: false }));
+    probe.src = photos[index];
+  }, [index]);
+
   const handleTouchStart = (e: React.TouchEvent) => {
     const t = e.touches[0];
     touchStart.current = { x: t.clientX, y: t.clientY };
@@ -60,7 +70,7 @@ export default function Gallery() {
         <h2 className="section-title">Our Moments</h2>
       </Reveal>
 
-      <Reveal delay={150}>
+      <Reveal delay={150} variant="up">
         <div className="gallery-viewport">
           <button
             type="button"

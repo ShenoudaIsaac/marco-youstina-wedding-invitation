@@ -100,7 +100,7 @@ export default function Venue() {
         <h2 className="section-title">The Venue</h2>
       </Reveal>
 
-      <Reveal delay={150}>
+      <Reveal delay={150} variant="up">
         <div className="venue-card">
           {photoFailed ? (
             <VenueArt />

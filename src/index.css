@@ -128,7 +128,8 @@ button {
   align-items: center;
   justify-content: center;
   padding: 24px;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .splash-gate.is-exiting {
@@ -139,6 +140,8 @@ button {
 .splash-card {
   position: relative;
   width: min(92vw, 520px);
+  margin: auto;
+  min-height: min(80vh, 660px);
   min-height: min(80svh, 660px);
   display: flex;
   flex-direction: column;
@@ -147,13 +150,21 @@ button {
   gap: 14px;
   text-align: center;
   padding: 48px 26px;
-  background: rgba(8, 19, 38, 0.55);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(8, 19, 38, 0.78);
   border: 1px solid var(--gold-dim);
   outline: 1px solid var(--gold-faint);
   outline-offset: 7px;
   border-radius: 4px;
+}
+
+/* Larger screens can afford the glass blur; phones skip it because the
+   animated night sky behind would force a re-blur every frame. */
+@media (min-width: 768px) {
+  .splash-card {
+    background: rgba(8, 19, 38, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
 }
 
 .splash-monogram {
@@ -272,6 +283,7 @@ button {
 
 /* Hero */
 .hero-section {
+  min-height: 100vh;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -327,6 +339,8 @@ button {
   align-items: center;
   gap: 18px;
   margin: 22px 0 4px;
+  font-weight: normal;
+  outline: none;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -426,10 +440,10 @@ button {
 .hero-chevron {
   position: absolute;
   bottom: 22px;
-  animation: bounceChevron 2s ease-in-out infinite;
-  animation-delay: 2.9s;
   opacity: 0;
-  animation-fill-mode: forwards;
+  animation:
+    heroFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 2.9s both,
+    bounceChevron 2s ease-in-out 3.7s infinite;
   color: var(--gold);
   font-size: 22px;
 }
@@ -559,22 +573,35 @@ button {
 
 .gallery-dots {
   display: flex;
-  gap: 8px;
+  gap: 2px;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 12px;
 }
 
+/* The visible dot is a ::before inside a 28px button so the tap target
+   stays finger-sized while the dot itself stays small. */
 .gallery-dot {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.gallery-dot::before {
+  content: "";
   width: 8px;
   height: 8px;
   border-radius: 999px;
   background: var(--gold-faint);
   border: 1px solid var(--gold-dim);
-  cursor: pointer;
-  padding: 0;
 }
 
-.gallery-dot.active {
+.gallery-dot.active::before {
   background: var(--gold);
 }
 
@@ -707,7 +734,7 @@ button {
 /* Music player */
 .music-player-btn {
   position: fixed;
-  bottom: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
   right: 20px;
   /* Below the splash gate (z-index 40) so it stays hidden until opened. */
   z-index: 30;
@@ -858,7 +885,7 @@ button {
 
 /* Small phones: tighten the countdown so all four tiles stay on one row,
    and slim the gallery arrows so they cover less of the photo. */
-@media (max-width: 420px) {
+@media (max-width: 479px) {
   .countdown-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -876,12 +903,6 @@ button {
   .countdown-label {
     font-size: 8.5px;
     letter-spacing: 0.12em;
-  }
-
-  .gallery-nav-btn {
-    width: 38px;
-    height: 38px;
-    font-size: 19px;
   }
 
   .gallery-nav-btn.prev {

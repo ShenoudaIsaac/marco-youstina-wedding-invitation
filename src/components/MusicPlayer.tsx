@@ -51,7 +51,7 @@ const MusicPlayer = forwardRef<MusicPlayerHandle>(function MusicPlayer(_, ref) {
         onEnded={handleEnded}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
-        preload="auto"
+        preload="none"
       />
       <button
         type="button"
