@@ -45,6 +45,13 @@ export const config = {
     "/images/couple-06.jpg",
   ],
 
+  // Discreet credit line at the very bottom of the page.
+  credit: {
+    name: "Shenouda Isaac",
+    phone: "01284493242",
+    whatsappUrl: "https://wa.me/201284493242",
+  },
+
   // Song file lives at public/audio/perfect.mp3 (Perfect — Ed Sheeran).
   // Playback starts at startAtSeconds and loops back there when the song ends.
   music: {
